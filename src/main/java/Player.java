@@ -1,7 +1,7 @@
 public class Player {
     private int x;
     private int y;
-    private String symbol;
+    private final String symbol;
     private int previousX; 
     private int previousY;
 
@@ -57,6 +57,10 @@ public class Player {
         x += 2;
     }
 
+    public void movePreviousPosition(){
+        x = previousX;
+        y = previousY;
+    }
     @Override
     public String toString() {
         return "Player{" +
