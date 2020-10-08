@@ -4,6 +4,7 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MonsterGame {
@@ -12,7 +13,7 @@ public class MonsterGame {
     static private TextGraphics tg;
 
     static private Player player;
-    static private List<Monster> monsters;
+    static private ArrayList<Monster> monsters =new ArrayList<>();
 //    static private List<Obstacle> obstacles;
 //    static private List<Bomb> bombs;
 
@@ -74,8 +75,11 @@ public class MonsterGame {
 
     }
 
-    private static void drawCharacters(Terminal terminal, Player player, List<Monster> monsters) throws IOException {
-
+    private static void drawCharacters() throws IOException {
+        tg.setForegroundColor(TextColor.ANSI.CYAN);
+        for (Monster monster : monsters){
+            tg.putString(monster.getMonsterX(), monster.getMonsterY(), String.valueOf(monster.getMonsterCharacter()));
+        }
         tg.setForegroundColor(TextColor.ANSI.GREEN);
         tg.putString(player.getX(), player.getY(), player.getSymbol());
 
