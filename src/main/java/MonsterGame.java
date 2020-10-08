@@ -76,6 +76,8 @@ public class MonsterGame {
 //                player.moveToPreviousPosition();
             }
 
+            drawCharacters();
+
             // Check if player picked a fruit
             for (Fruit fruit : fruits) {
                 if (player.getX() == fruit.getX() && player.getY() == fruit.getY()) {
@@ -86,12 +88,22 @@ public class MonsterGame {
                 }
             }
 
-            drawCharacters();
-
-            // Check if user won
+            // Check if player won
             if (fruits.size() == 0) {
-                continueReadingInput = false;
                 drawMessage("YOU WON!");
+                continueReadingInput = false;
+            }
+
+            // Check if player stepped on a bomb
+            for (Bomb bomb : bombs) {
+                if (player.getX() == bomb.getX() && player.getY() == bomb.getY()) {
+                    tg.setForegroundColor(TextColor.ANSI.RED);
+                    tg.putString(player.getX(), player.getY(), player.getSymbol());
+                    terminal.flush();
+                    drawMessage("GAME OVER");
+                    continueReadingInput = false;
+                    break;
+                }
             }
         }
     }
