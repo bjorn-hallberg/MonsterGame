@@ -3,14 +3,15 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
+import java.util.List;
 
 public class MonsterGame {
 
     static private Terminal terminal;
     static private TextGraphics tg;
 
-//    static private Player player;
-//    static private List<Monster> monsters;
+    static private Player player;
+    static private List<Monster> monsters;
 //    static private List<Obstacle> obstacles;
 //    static private List<Bomb> bombs;
 
@@ -40,7 +41,7 @@ public class MonsterGame {
         // Create player
 
         // Create monsters
-
+        
         // Create obstacles
 
         // Create bombs
