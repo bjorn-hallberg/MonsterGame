@@ -13,10 +13,12 @@ public class MonsterGame {
     static private TextGraphics tg;
 
     static private Player player;
-    static private ArrayList<Monster> monsters =new ArrayList<>();
-//    static private List<Obstacle> obstacles;
-//    static private List<Bomb> bombs;
+    static private List<Monster> monsters = new ArrayList<>();
+    //    static private List<Obstacle> obstacles = new ArrayList<>();
+    static private List<Bomb> bombs = new ArrayList<>();
+//    static private List<Fruit> fruits = new ArrayList<>();
 
+    static int score = 0;
 
     public static void main(String[] args) {
         try {
@@ -32,9 +34,9 @@ public class MonsterGame {
         terminal = new DefaultTerminalFactory().createTerminal();
         terminal.setCursorVisible(false);
         tg = terminal.newTextGraphics();
-        tg.putString(0, 0, "╔" + "═".repeat(78) + "╗");
-        tg.putString(0, 1, "║" + " ".repeat(33) + "Monster Game" + " ".repeat(33) + "║");
-        tg.putString(0, 2, "╚" + "═".repeat(78) + "╝");
+        tg.putString(0, 0, "╔═══════════════════════════════════════════════════════════════╤══════════════╗");
+        tg.putString(0, 1, "║                                 MONSTER GAME                  │  Score:      ║");
+        tg.putString(0, 2, "╚═══════════════════════════════════════════════════════════════╧══════════════╝");
 
         initGame();
     }
@@ -55,9 +57,19 @@ public class MonsterGame {
         // Create and draw obstacles
 
         // Create and draw bombs
+        bombs.add(new Bomb(62, 16));
+        tg.setForegroundColor(TextColor.ANSI.RED);
+        for (Bomb bomb : bombs) {
+            tg.putString(bomb.getX(), bomb.getY(), bomb.getSymbol());
+        }
+
+        // Create and draw fruits
 
         // Draw player and monsters
         drawCharacters();
+
+        // Draw score
+        drawScore();
     }
 
     private static void printPlayer() throws IOException {
@@ -77,11 +89,21 @@ public class MonsterGame {
 
     private static void drawCharacters() throws IOException {
         tg.setForegroundColor(TextColor.ANSI.CYAN);
-        for (Monster monster : monsters){
+        for (Monster monster : monsters) {
             tg.putString(monster.getMonsterX(), monster.getMonsterY(), String.valueOf(monster.getMonsterCharacter()));
         }
         tg.setForegroundColor(TextColor.ANSI.GREEN);
         tg.putString(player.getX(), player.getY(), player.getSymbol());
+
+        terminal.flush();
+    }
+
+    private static void drawScore() throws IOException {
+        String str = String.valueOf(score);
+        str += " ".repeat(3 - str.length());
+
+        tg.setForegroundColor(TextColor.ANSI.DEFAULT);
+        tg.putString(74, 1, str);
 
         terminal.flush();
     }
