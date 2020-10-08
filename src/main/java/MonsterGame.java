@@ -14,6 +14,7 @@ public class MonsterGame {
     static private List<Monster> monsters;
 //    static private List<Obstacle> obstacles;
 //    static private List<Bomb> bombs;
+//    static private List<Fruit> fruits;
 
 
     public static void main(String[] args) {
@@ -30,9 +31,9 @@ public class MonsterGame {
         terminal = new DefaultTerminalFactory().createTerminal();
         terminal.setCursorVisible(false);
         tg = terminal.newTextGraphics();
-        tg.putString(0, 0, "╔" + "═".repeat(78) + "╗");
-        tg.putString(0, 1, "║" + " ".repeat(33) + "Monster Game" + " ".repeat(33) + "║");
-        tg.putString(0, 2, "╚" + "═".repeat(78) + "╝");
+        tg.putString(0, 0, "╔════════════════════════════════════════════════════════════════╤═════════════╗");
+        tg.putString(0, 1, "║                                 MONSTER GAME                   │  Score:     ║");
+        tg.putString(0, 2, "╚════════════════════════════════════════════════════════════════╧═════════════╝");
 
         initGame();
     }
@@ -51,6 +52,8 @@ public class MonsterGame {
         // Create and draw obstacles
 
         // Create and draw bombs
+
+        // Create and draw fruits
 
         // Draw player and monsters
         drawCharacters();
