@@ -11,7 +11,7 @@ public class MonsterGame {
 
 //    static private Player player;
 //    static private List<Monster> monsters;
-//    static private List<Obstacles> obstacles;
+//    static private List<Obstacle> obstacles;
 //    static private List<Bomb> bombs;
 
 
@@ -27,8 +27,11 @@ public class MonsterGame {
     private static void startGame() throws IOException {
         // Create terminal
         terminal = new DefaultTerminalFactory().createTerminal();
-        tg = terminal.newTextGraphics();
         terminal.setCursorVisible(false);
+        tg = terminal.newTextGraphics();
+        tg.putString(0, 0, "*".repeat(80));
+        tg.putString(33, 1, "Monster Game");
+        tg.putString(0, 2, "*".repeat(80));
 
         initGame();
     }
@@ -49,6 +52,10 @@ public class MonsterGame {
     }
 
     private static void moveMonsters() {
+
+    }
+
+    private static void drawCharacters() {
 
     }
 
