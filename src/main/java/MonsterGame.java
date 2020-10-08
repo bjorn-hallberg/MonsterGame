@@ -37,7 +37,7 @@ public class MonsterGame {
         initGame();
     }
 
-    private static void initGame() {
+    private static void initGame() throws IOException {
         // Create player
         final char playerSymbol = '\u263B';
         Player player = new Player(5, 5, playerSymbol);
@@ -53,7 +53,7 @@ public class MonsterGame {
         // Create and draw bombs
 
         // Draw player and monsters
-        drawCharacters();
+        drawCharacters(terminal, player, monsters);
     }
 
     private static void movePlayer() {
@@ -64,8 +64,15 @@ public class MonsterGame {
 
     }
 
-    private static void drawCharacters() {
+    private static void drawCharacters(Terminal terminal, Player player, List<Monster> monsters) throws IOException {
 
+        terminal.setCursorPosition(player.getPreviousX(), player.getPreviousY());
+        terminal.putCharacter(' ');
+
+        terminal.setCursorPosition(player.getX(), player.getY());
+        terminal.putCharacter(player.getSymbol());
+
+        terminal.flush();
     }
 
     private static void endGame() throws IOException, InterruptedException {

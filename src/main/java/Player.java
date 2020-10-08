@@ -2,15 +2,15 @@ public class Player {
     private int x;
     private int y;
     private char symbol;
-    private int previousX;
-    private int previousY;
+    private int previousPlayerX;
+    private int previousPlayerY;
 
     public Player(int x, int y, char symbol) {
         this.x = x;
         this.y = y;
         this.symbol = symbol;
-        this.previousX = x;
-        this.previousY = y;
+        this.previousPlayerX = x;
+        this.previousPlayerY = y;
     }
 
     public int getX() {
@@ -26,34 +26,34 @@ public class Player {
     }
 
     public int getPreviousX() {
-        return previousX;
+        return previousPlayerX;
     }
 
     public int getPreviousY() {
-        return previousY;
+        return previousPlayerY;
     }
 
     public void moveUp(){
-        previousX = x;
-        previousY = y;
+        previousPlayerX = x;
+        previousPlayerY = y;
         y -= 2;
     }
 
     public void moveDown(){
-        previousX = x;
-        previousY = y;
+        previousPlayerX = x;
+        previousPlayerY = y;
         y += 2;
     }
 
     public void moveLeft(){
-        previousX = x;
-        previousY = y;
+        previousPlayerX = x;
+        previousPlayerY = y;
         x -= 2;
     }
 
     public void moveRight(){
-        previousX = x;
-        previousY = y;
+        previousPlayerX = x;
+        previousPlayerY = y;
         x += 2;
     }
 
@@ -63,8 +63,8 @@ public class Player {
                 "x=" + x +
                 ", y=" + y +
                 ", symbol=" + symbol +
-                ", previousX=" + previousX +
-                ", previousY=" + previousY +
+                ", previousX=" + previousPlayerX +
+                ", previousY=" + previousPlayerY +
                 '}';
     }
 }
