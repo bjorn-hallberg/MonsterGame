@@ -13,7 +13,7 @@ public class MonsterGame {
     static private TextGraphics tg;
 
     static private Player player;
-    static private ArrayList<Monster> monsters =new ArrayList<>();
+    static private List<Monster> monsters =new ArrayList<>();
 //    static private List<Obstacle> obstacles;
 //    static private List<Bomb> bombs;
 
@@ -47,10 +47,12 @@ public class MonsterGame {
         printPlayer();
 
         // Create monsters
-        Monster monster1 = new Monster(20, 15, '\u263B');
+        Monster monster1 = new Monster(20, 15);
         monsters.add(monster1);
-        Monster monster2 = new Monster(30, 20, '\u263B');
+        Monster monster2 = new Monster(30, 20);
         monsters.add(monster2);
+        Monster monster3 = new Monster(60, 10);
+        monsters.add(monster3);
 
         // Create and draw obstacles
 
@@ -78,7 +80,7 @@ public class MonsterGame {
     private static void drawCharacters() throws IOException {
         tg.setForegroundColor(TextColor.ANSI.CYAN);
         for (Monster monster : monsters){
-            tg.putString(monster.getMonsterX(), monster.getMonsterY(), String.valueOf(monster.getMonsterCharacter()));
+            tg.putString(monster.getX(), monster.getY(), String.valueOf(monster.getMonsterCharacter()));
         }
         tg.setForegroundColor(TextColor.ANSI.GREEN);
         tg.putString(player.getX(), player.getY(), player.getSymbol());
