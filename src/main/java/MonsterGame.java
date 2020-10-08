@@ -17,6 +17,7 @@ public class MonsterGame {
 //    static private List<Bomb> bombs = new ArrayList<>();;
 //    static private List<Fruit> fruits = new ArrayList<>();;
 
+    static int score = 0;
 
     public static void main(String[] args) {
         try {
@@ -32,14 +33,14 @@ public class MonsterGame {
         terminal = new DefaultTerminalFactory().createTerminal();
         terminal.setCursorVisible(false);
         tg = terminal.newTextGraphics();
-        tg.putString(0, 0, "╔════════════════════════════════════════════════════════════════╤═════════════╗");
-        tg.putString(0, 1, "║                                 MONSTER GAME                   │  Score:     ║");
-        tg.putString(0, 2, "╚════════════════════════════════════════════════════════════════╧═════════════╝");
+        tg.putString(0, 0, "╔═══════════════════════════════════════════════════════════════╤══════════════╗");
+        tg.putString(0, 1, "║                                 MONSTER GAME                  │  Score:      ║");
+        tg.putString(0, 2, "╚═══════════════════════════════════════════════════════════════╧══════════════╝");
 
         initGame();
     }
 
-    private static void initGame() {
+    private static void initGame() throws IOException {
         // Create player
         final char playerSymbol = '\u263B';
         Player player = new Player(5, 5, playerSymbol);
@@ -58,6 +59,9 @@ public class MonsterGame {
 
         // Draw player and monsters
         drawCharacters();
+
+        // Draw score
+        drawScore();
     }
 
     private static void movePlayer() {
@@ -70,6 +74,13 @@ public class MonsterGame {
 
     private static void drawCharacters() {
 
+    }
+
+    private static void drawScore() throws IOException {
+        String str = String.valueOf(score);
+        str += " ".repeat(3 - str.length());
+        tg.putString(74, 1, str);
+        terminal.flush();
     }
 
     private static void endGame() throws IOException, InterruptedException {
