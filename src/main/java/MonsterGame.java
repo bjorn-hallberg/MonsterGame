@@ -1,5 +1,7 @@
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
+import com.googlecode.lanterna.input.KeyStroke;
+import com.googlecode.lanterna.input.KeyType;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
@@ -9,7 +11,6 @@ import java.util.List;
 
 public class MonsterGame {
     static private Terminal terminal;
-
     static private TextGraphics tg;
 
     static private Player player;
@@ -29,7 +30,7 @@ public class MonsterGame {
         }
     }
 
-    private static void startGame() throws IOException {
+    private static void startGame() throws IOException, InterruptedException {
         // Create terminal
         terminal = new DefaultTerminalFactory().createTerminal();
         terminal.setCursorVisible(false);
@@ -39,11 +40,48 @@ public class MonsterGame {
         tg.putString(0, 2, "╚═══════════════════════════════════════════════════════════════╧══════════════╝");
 
         initGame();
+
+        boolean continueReadingInput = true;
+        int iter = 0;
+        KeyStroke keyStroke;
+        while (continueReadingInput) {
+            do {
+                iter = (iter + 1) % 100;
+                if (iter == 0) {
+                    // Move monsters
+                    moveMonsters();
+                    drawCharacters();
+                }
+
+                Thread.sleep(5);
+                keyStroke = terminal.pollInput();
+            } while (keyStroke == null);
+
+            // Check if user wants to quit
+            if (keyStroke.getCharacter() == Character.valueOf('q') || keyStroke.getKeyType() == KeyType.Escape) {
+                continueReadingInput = false;
+                break;
+            }
+
+            // Calculate player's new position
+            switch (keyStroke.getKeyType()) {
+                case ArrowDown -> player.moveDown();
+                case ArrowUp -> player.moveUp();
+                case ArrowRight -> player.moveRight();
+                case ArrowLeft -> player.moveLeft();
+            }
+
+            // Check if valid position
+            if (!validPlayerPosition(player)) {
+//                player.moveToPreviousPosition();
+            }
+
+            drawCharacters();
+        }
     }
 
     private static void initGame() throws IOException {
         // Create player
-
         player = new Player(10, 10, String.valueOf('\u263B'));
 
         printPlayer();
@@ -79,12 +117,44 @@ public class MonsterGame {
         terminal.flush();
     }
 
-    private static void movePlayer() {
-
+    private static void moveMonsters() {
+        for (Monster monster : monsters) {
+            monster.moveMonster(player);
+            // Check if valid position
+            // monster.moveToPreviousPosition();
+        }
     }
 
-    private static void moveMonsters() {
+    private static boolean validPlayerPosition(Player player) throws IOException {
+        // Check if tried to move outside screen
+        if (player.getX() < 0 || player.getY() < 3 || player.getX() > terminal.getTerminalSize().getColumns() - 1 || player.getY() > terminal.getTerminalSize().getRows() - 1) {
+            return false;
+        }
 
+        // Check if tried to move into an obstacle
+//        for (Obstacle obstacle : obstacles) {
+//            if (player.getX() == obstacle.getX() && player.getY() == obstacle.getY()) {
+//                return false;
+//            }
+//        }
+
+        return true;
+    }
+
+    private static boolean validMonsterPosition(Monster monster) throws IOException {
+        // Check if tried to move outside screen
+//        if (monster.getX() < 0 || monster.getY() < 3 || monster.getX() > terminal.getTerminalSize().getColumns() - 1 || monster.getY() > terminal.getTerminalSize().getRows() - 1) {
+//            return false;
+//        }
+
+        // Check if tried to move into an obstacle
+//        for (Obstacle obstacle : obstacles) {
+//            if (player.getX() == obstacle.getX() && player.getY() == obstacle.getY()) {
+//                return false;
+//            }
+//        }
+
+        return true;
     }
 
     private static void drawCharacters() throws IOException {
