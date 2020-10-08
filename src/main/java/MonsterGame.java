@@ -108,7 +108,17 @@ public class MonsterGame {
         terminal.flush();
     }
 
+    private static void drawMessage(String message) throws IOException {
+        int len = message.length();
+        tg.setForegroundColor(TextColor.ANSI.DEFAULT);
+        tg.putString((74 - len) / 2, 11, "╔══" + "═".repeat(len) + "══╗");
+        tg.putString((74 - len) / 2, 12, "║  " + message + "  ║");
+        tg.putString((74 - len) / 2, 13, "╚══" + "═".repeat(len) + "══╝");
+        terminal.flush();
+    }
+
     private static void endGame() throws IOException, InterruptedException {
+        drawMessage("GAME OVER");
         Thread.sleep(10000);
         terminal.close();
     }
