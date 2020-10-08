@@ -33,4 +33,21 @@ public class Monster {
     public int getOldMonsterY() {
         return oldMonsterY;
     }
+    public void chasePlayer(Player player){
+        // The monster moves towards the player
+        // Calculate monster's new position
+
+            if (player.getX < this.MonsterX) {
+                this.MonsterX--;
+            } else if (player.getX > this.MonsterX) {
+                this.MonsterX++;
+            }
+            if (player.getY < this.MonsterY) {
+                this.MonsterY--;
+            } else if (player.getY > this.MonsterY) {
+                this.MonsterY++;
+            }
+
+    }
+
 }
