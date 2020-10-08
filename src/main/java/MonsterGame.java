@@ -3,6 +3,7 @@ import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MonsterGame {
@@ -11,10 +12,10 @@ public class MonsterGame {
     static private TextGraphics tg;
 
     static private Player player;
-    static private List<Monster> monsters;
-//    static private List<Obstacle> obstacles;
-//    static private List<Bomb> bombs;
-//    static private List<Fruit> fruits;
+    static private List<Monster> monsters = new ArrayList<>();;
+//    static private List<Obstacle> obstacles = new ArrayList<>();;
+//    static private List<Bomb> bombs = new ArrayList<>();;
+//    static private List<Fruit> fruits = new ArrayList<>();;
 
 
     public static void main(String[] args) {
