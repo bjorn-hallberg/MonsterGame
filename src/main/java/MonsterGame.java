@@ -41,6 +41,10 @@ public class MonsterGame {
         // Create player
 
         // Create monsters
+        Monster monster1 = new Monster(20,30,'\u263B');
+        monsters.add(monster1);
+        Monster monster2 = new Monster(30,20,'\u263B');
+        monsters.add(monster2);
         
         // Create and draw obstacles
 
