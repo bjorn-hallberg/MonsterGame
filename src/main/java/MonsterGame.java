@@ -42,10 +42,12 @@ public class MonsterGame {
 
         // Create monsters
         
-        // Create obstacles
+        // Create and draw obstacles
 
-        // Create bombs
+        // Create and draw bombs
 
+        // Draw player and monsters
+        drawCharacters();
     }
 
     private static void movePlayer() {
