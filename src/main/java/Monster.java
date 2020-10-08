@@ -1,14 +1,16 @@
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
+
 public class Monster {
     private int monsterX;
     private int monsterY;
-    private char monster;
+    static final char monsterCharacter= '\u2689';
     private int oldMonsterX;
     private int oldMonsterY;
 
-    public Monster(int monsterX, int monsterY, char monster) {
+    public Monster(int monsterX, int monsterY, char monsterCharacter) {
         this.monsterX = monsterX;
         this.monsterY = monsterY;
-        this.monster = monster;
         this.oldMonsterX = monsterX;
         this.oldMonsterY = monsterY;
 
@@ -22,8 +24,8 @@ public class Monster {
         return monsterY;
     }
 
-    public char getMonster() {
-        return monster;
+    static public char getMonsterCharacter() {
+        return monsterCharacter;
     }
 
     public int getOldMonsterX() {
@@ -55,5 +57,10 @@ public class Monster {
 
 
     }
+
+/*    public void drawMonster(TextGraphics tg){
+        tg.setForegroundColor(TextColor.ANSI.CYAN);
+        tg.putString(monsterX, monsterX, String.valueOf(monsterCharacter));
+    }*/
 
 }

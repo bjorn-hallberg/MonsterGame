@@ -1,8 +1,10 @@
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class MonsterGame {
@@ -11,7 +13,7 @@ public class MonsterGame {
     static private TextGraphics tg;
 
     static private Player player;
-    static private List<Monster> monsters;
+    static private ArrayList<Monster> monsters =new ArrayList<>();
 //    static private List<Obstacle> obstacles;
 //    static private List<Bomb> bombs;
 
@@ -37,23 +39,23 @@ public class MonsterGame {
         initGame();
     }
 
-    private static void initGame() {
+    private static void initGame() throws IOException {
         // Create player
         final char playerSymbol = '\u263B';
         Player player = new Player(5, 5, playerSymbol);
 
         // Create monsters
-        Monster monster1 = new Monster(20,30,'\u263B');
+        Monster monster1 = new Monster(8,8, Monster.getMonsterCharacter());
         monsters.add(monster1);
-        Monster monster2 = new Monster(30,20,'\u263B');
+        Monster monster2 = new Monster(12,12, Monster.getMonsterCharacter());
         monsters.add(monster2);
-        
+
         // Create and draw obstacles
 
         // Create and draw bombs
 
         // Draw player and monsters
-        drawCharacters();
+        drawCharacters(player, terminal, monsters);
     }
 
     private static void movePlayer() {
@@ -64,7 +66,14 @@ public class MonsterGame {
 
     }
 
-    private static void drawCharacters() {
+    private static void drawCharacters(Player player, Terminal terminal, ArrayList<Monster> monsters) throws IOException {
+        tg.setForegroundColor(TextColor.ANSI.CYAN);
+        for (Monster monster : monsters){
+            tg.putString(monster.getMonsterX(), monster.getMonsterY(), String.valueOf(monster.getMonsterCharacter()));
+        }
+        terminal.flush();
+
+
 
     }
 
