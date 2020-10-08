@@ -10,7 +10,7 @@ public class MonsterGame {
     static private Terminal terminal;
     static private TextGraphics tg;
 
-//    static private Player player;
+    static private Player player;
     static private List<Monster> monsters;
 //    static private List<Obstacle> obstacles;
 //    static private List<Bomb> bombs;
