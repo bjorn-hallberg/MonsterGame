@@ -17,7 +17,7 @@ public class MonsterGame {
     static private List<Monster> monsters = new ArrayList<>();
     //    static private List<Obstacle> obstacles = new ArrayList<>();
     static private List<Bomb> bombs = new ArrayList<>();
-//    static private List<Fruit> fruits = new ArrayList<>();
+    static private List<Fruit> fruits = new ArrayList<>();
 
     static int score = 0;
 
@@ -76,7 +76,23 @@ public class MonsterGame {
 //                player.moveToPreviousPosition();
             }
 
+            // Check if player picked a fruit
+            for (Fruit fruit : fruits) {
+                if (player.getX() == fruit.getX() && player.getY() == fruit.getY()) {
+                    score++;
+                    drawScore();
+                    fruits.remove(fruit);
+                    break;
+                }
+            }
+
             drawCharacters();
+
+            // Check if user won
+            if (fruits.size() == 0) {
+                continueReadingInput = false;
+                drawMessage("YOU WON!");
+            }
         }
     }
 
@@ -102,6 +118,12 @@ public class MonsterGame {
         }
 
         // Create and draw fruits
+        fruits.add(new Fruit(54, 12));
+        fruits.add(new Fruit(38, 18));
+        tg.setForegroundColor(TextColor.ANSI.YELLOW);
+        for (Fruit fruit : fruits) {
+            tg.putString(fruit.getX(), fruit.getY(), fruit.getSymbol());
+        }
 
         // Draw player and monsters
         drawCharacters();
@@ -188,7 +210,7 @@ public class MonsterGame {
     }
 
     private static void endGame() throws IOException, InterruptedException {
-        drawMessage("GAME OVER");
+        //drawMessage("GAME OVER");
         Thread.sleep(10000);
         terminal.close();
     }
