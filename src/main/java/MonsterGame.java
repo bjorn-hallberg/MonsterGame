@@ -1,3 +1,4 @@
+import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
@@ -12,10 +13,10 @@ public class MonsterGame {
     static private TextGraphics tg;
 
     static private Player player;
-    static private List<Monster> monsters = new ArrayList<>();;
-//    static private List<Obstacle> obstacles = new ArrayList<>();;
-//    static private List<Bomb> bombs = new ArrayList<>();;
-//    static private List<Fruit> fruits = new ArrayList<>();;
+    static private List<Monster> monsters = new ArrayList<>();
+//    static private List<Obstacle> obstacles = new ArrayList<>();
+//    static private List<Bomb> bombs = new ArrayList<>();
+//    static private List<Fruit> fruits = new ArrayList<>();
 
     static int score = 0;
 
@@ -79,7 +80,10 @@ public class MonsterGame {
     private static void drawScore() throws IOException {
         String str = String.valueOf(score);
         str += " ".repeat(3 - str.length());
+
+        tg.setForegroundColor(TextColor.ANSI.DEFAULT);
         tg.putString(74, 1, str);
+
         terminal.flush();
     }
 
