@@ -43,6 +43,10 @@ public class MonsterGame {
         Player player = new Player(5, 5, playerSymbol);
 
         // Create monsters
+        Monster monster1 = new Monster(20,30,'\u263B');
+        monsters.add(monster1);
+        Monster monster2 = new Monster(30,20,'\u263B');
+        monsters.add(monster2);
         
         // Create and draw obstacles
 
@@ -65,7 +69,7 @@ public class MonsterGame {
     }
 
     private static void endGame() throws IOException, InterruptedException {
-        Thread.sleep(5000);
+        Thread.sleep(10000);
         terminal.close();
     }
 }
