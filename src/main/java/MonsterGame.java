@@ -30,9 +30,9 @@ public class MonsterGame {
         terminal = new DefaultTerminalFactory().createTerminal();
         terminal.setCursorVisible(false);
         tg = terminal.newTextGraphics();
-        tg.putString(0, 0, "*".repeat(80));
-        tg.putString(33, 1, "Monster Game");
-        tg.putString(0, 2, "*".repeat(80));
+        tg.putString(0, 0, "╔" + "═".repeat(78) + "╗");
+        tg.putString(0, 1, "║" + " ".repeat(33) + "Monster Game" + " ".repeat(33) + "║");
+        tg.putString(0, 2, "╚" + "═".repeat(78) + "╝");
 
         initGame();
     }
@@ -46,10 +46,12 @@ public class MonsterGame {
         Monster monster2 = new Monster(30,20,'\u263B');
         monsters.add(monster2);
         
-        // Create obstacles
+        // Create and draw obstacles
 
-        // Create bombs
+        // Create and draw bombs
 
+        // Draw player and monsters
+        drawCharacters();
     }
 
     private static void movePlayer() {
