@@ -14,8 +14,8 @@ public class MonsterGame {
 
     static private Player player;
     static private List<Monster> monsters = new ArrayList<>();
-//    static private List<Obstacle> obstacles = new ArrayList<>();
-//    static private List<Bomb> bombs = new ArrayList<>();
+    //    static private List<Obstacle> obstacles = new ArrayList<>();
+    static private List<Bomb> bombs = new ArrayList<>();
 //    static private List<Fruit> fruits = new ArrayList<>();
 
     static int score = 0;
@@ -57,6 +57,11 @@ public class MonsterGame {
         // Create and draw obstacles
 
         // Create and draw bombs
+        bombs.add(new Bomb(62, 16));
+        tg.setForegroundColor(TextColor.ANSI.RED);
+        for (Bomb bomb : bombs) {
+            tg.putString(bomb.getX(), bomb.getY(), bomb.getSymbol());
+        }
 
         // Create and draw fruits
 
@@ -84,7 +89,7 @@ public class MonsterGame {
 
     private static void drawCharacters() throws IOException {
         tg.setForegroundColor(TextColor.ANSI.CYAN);
-        for (Monster monster : monsters){
+        for (Monster monster : monsters) {
             tg.putString(monster.getMonsterX(), monster.getMonsterY(), String.valueOf(monster.getMonsterCharacter()));
         }
         tg.setForegroundColor(TextColor.ANSI.GREEN);
