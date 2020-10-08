@@ -1,11 +1,11 @@
 public class Player {
     private int x;
     private int y;
-    private char symbol;
+    private String symbol;
     private int previousPlayerX;
     private int previousPlayerY;
 
-    public Player(int x, int y, char symbol) {
+    public Player(int x, int y, String symbol) {
         this.x = x;
         this.y = y;
         this.symbol = symbol;
@@ -21,7 +21,7 @@ public class Player {
         return y;
     }
 
-    public char getSymbol() {
+    public String getSymbol() {
         return symbol;
     }
 
