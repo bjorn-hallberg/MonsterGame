@@ -39,6 +39,8 @@ public class MonsterGame {
 
     private static void initGame() {
         // Create player
+        final char playerSymbol = '\u263B';
+        Player player = new Player(5, 5, playerSymbol);
 
         // Create monsters
         Monster monster1 = new Monster(20,30,'\u263B');
