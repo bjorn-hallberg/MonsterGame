@@ -14,6 +14,14 @@ public abstract class GameCharacter extends GameObject {
         previousY = y;
     }
 
+    public int getPreviousX() {
+        return previousX;
+    }
+
+    public int getPreviousY() {
+        return previousY;
+    }
+
     public void moveToPreviousPosition() {
         x = previousX;
         y = previousY;
