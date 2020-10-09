@@ -9,6 +9,7 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class MonsterGame {
     static private Terminal terminal;
@@ -128,15 +129,11 @@ public class MonsterGame {
         player = new Player(10, 10, String.valueOf('\u263B'));
 
         printPlayer();
-
         // Create monsters
-        Monster monster1 = new Monster(20, 15);
-        monsters.add(monster1);
-        Monster monster2 = new Monster(30, 20);
-        monsters.add(monster2);
-        Monster monster3 = new Monster(60, 10);
-        monsters.add(monster3);
+        for (int i=0;i<10;i++){
+            monsters.add(new Monster(ThreadLocalRandom.current().nextInt(1,44), ThreadLocalRandom.current().nextInt(1,50)));
 
+        }
         // Create and draw obstacles
         List<TerminalPosition> obstacles = new ArrayList<>();
         Obstacle obstacle1 = new Obstacle(10, 10, 10);
