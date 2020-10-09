@@ -89,17 +89,18 @@ public class MonsterGame {
                 case ArrowLeft -> player.moveLeft();
             }
 
-            // Check if valid player position
+            // Check if invalid player position
             if (invalidCharacterPosition(player)) {
                 player.moveToPreviousPosition();
             }
 
+            // Draw player
             drawCharacters();
 
             // Check if player picked a fruit
             for (GameObject fruit : fruits) {
                 if (player.getX() == fruit.getX() && player.getY() == fruit.getY()) {
-                    score++;
+                    score += 100;
                     drawScore();
                     fruits.remove(fruit);
                     break;
@@ -187,7 +188,7 @@ public class MonsterGame {
     private static void moveMonsters() throws IOException {
         for (Monster monster : monsters) {
             monster.moveMonster(player);
-            // Check if valid position
+            // Check if invalid monster position
             if (invalidCharacterPosition(monster)) {
                 monster.moveToPreviousPosition();
             }
