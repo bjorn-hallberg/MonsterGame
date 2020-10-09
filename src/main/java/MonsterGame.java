@@ -74,6 +74,7 @@ public class MonsterGame {
 
             // Check if user wants to quit
             if (keyStroke.getCharacter() == Character.valueOf('q') || keyStroke.getKeyType() == KeyType.Escape) {
+                drawMessage("Game ended");
                 continueReadingInput = false;
                 break;
             }
