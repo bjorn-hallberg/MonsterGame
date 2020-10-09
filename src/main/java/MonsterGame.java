@@ -18,8 +18,8 @@ public class MonsterGame {
     static private Player player;
     static private List<Monster> monsters = new ArrayList<>();
     static private List<Obstacle> obstacles = new ArrayList<>();
-    static private List<Bomb> bombs = new ArrayList<>();
-    static private List<Fruit> fruits = new ArrayList<>();
+    static private List<GameObject> bombs = new ArrayList<>();
+    static private List<GameObject> fruits = new ArrayList<>();
 
     static int score = 0;
 
@@ -33,24 +33,22 @@ public class MonsterGame {
     }
 
     private static void startGame() throws IOException, InterruptedException {
-        // Create terminal
-        terminal = new DefaultTerminalFactory().createTerminal();
-        terminal.setCursorVisible(false);
-        tg = terminal.newTextGraphics();
-        tg.putString(0, 0, "╔═══════════════════════════════════════════════════════════════╤══════════════╗");
-        tg.putString(0, 1, "║                                 MONSTER GAME                  │  Score:      ║");
-        tg.putString(0, 2, "╚═══════════════════════════════════════════════════════════════╧══════════════╝");
-
+        // Initiate game
         initGame();
 
+        // Run game
         boolean continueReadingInput = true;
         boolean monsterHasCaughtPlayer = false;
         int iter = 0;
         KeyStroke keyStroke = null;
         while (continueReadingInput) {
+            // Loop while no input from user
             do {
                 iter = (iter + 1) % 100;
                 if (iter == 0) {
+                    // Print game object again if monster moved over them
+                    drawGameObjects(fruits, TextColor.ANSI.YELLOW);
+
                     // Move monsters
                     moveMonsters();
                     drawCharacters();
@@ -61,13 +59,16 @@ public class MonsterGame {
                         continueReadingInput = false;
                         break;
                     }
+
+                    // Check if monster stepped on a bomb
+                    hasMonsterSteppedOnBomb();
                 }
 
                 Thread.sleep(5);
                 keyStroke = terminal.pollInput();
             } while (keyStroke == null);
 
-            // Break out if monster has caught player
+            // End game if monster has caught player
             if (monsterHasCaughtPlayer) {
                 drawMessage("GAME OVER");
                 break;
@@ -87,7 +88,7 @@ public class MonsterGame {
                 case ArrowLeft -> player.moveLeft();
             }
 
-            // Check if valid position
+            // Check if valid player position
             if (!validPlayerPosition(player)) {
                 player.moveToPreviousPosition();
             }
@@ -95,7 +96,7 @@ public class MonsterGame {
             drawCharacters();
 
             // Check if player picked a fruit
-            for (Fruit fruit : fruits) {
+            for (GameObject fruit : fruits) {
                 if (player.getX() == fruit.getX() && player.getY() == fruit.getY()) {
                     score++;
                     drawScore();
@@ -111,7 +112,7 @@ public class MonsterGame {
             }
 
             // Check if player stepped on a bomb
-            for (Bomb bomb : bombs) {
+            for (GameObject bomb : bombs) {
                 if (player.getX() == bomb.getX() && player.getY() == bomb.getY()) {
                     tg.setForegroundColor(TextColor.ANSI.RED);
                     tg.putString(player.getX(), player.getY(), player.getSymbol());
@@ -125,8 +126,16 @@ public class MonsterGame {
     }
 
     private static void initGame() throws IOException {
+        // Create terminal
+        terminal = new DefaultTerminalFactory().createTerminal();
+        terminal.setCursorVisible(false);
+        tg = terminal.newTextGraphics();
+        tg.putString(0, 0, "╔═══════════════════════════════════════════════════════════════╤══════════════╗");
+        tg.putString(0, 1, "║                                 MONSTER GAME                  │  Score:      ║");
+        tg.putString(0, 2, "╚═══════════════════════════════════════════════════════════════╧══════════════╝");
+
         // Create player
-        player = new Player(10, 10, String.valueOf('\u263B'));
+        player = new Player(40, 10, String.valueOf('\u263B'));
 
         printPlayer();
         // Create monsters
@@ -153,18 +162,16 @@ public class MonsterGame {
 
         // Create and draw bombs
         bombs.add(new Bomb(62, 16));
-        tg.setForegroundColor(TextColor.ANSI.RED);
-        for (Bomb bomb : bombs) {
-            tg.putString(bomb.getX(), bomb.getY(), bomb.getSymbol());
-        }
+        bombs.add(new Bomb(22, 8));
+        drawGameObjects(bombs, TextColor.ANSI.RED);
 
         // Create and draw fruits
         fruits.add(new Fruit(54, 12));
-        fruits.add(new Fruit(38, 18));
-        tg.setForegroundColor(TextColor.ANSI.YELLOW);
-        for (Fruit fruit : fruits) {
-            tg.putString(fruit.getX(), fruit.getY(), fruit.getSymbol());
-        }
+        fruits.add(new Fruit(38, 6));
+        fruits.add(new Fruit(4, 8));
+        fruits.add(new Fruit(24, 22));
+        fruits.add(new Fruit(70, 18));
+        drawGameObjects(fruits, TextColor.ANSI.YELLOW);
 
         // Draw player and monsters
         drawCharacters();
@@ -191,14 +198,14 @@ public class MonsterGame {
     }
 
     private static boolean validPlayerPosition(Player player) throws IOException {
-        // Check if tried to move outside screen
+        // Check if player tried to move outside screen
         if (player.getX() < 0 || player.getY() < 3 || player.getX() > terminal.getTerminalSize().getColumns() - 1 || player.getY() > terminal.getTerminalSize().getRows() - 1) {
             return false;
         }
 
-        // Check if tried to move into an obstacle
+        // Check if player tried to move into an obstacle
         for (Obstacle obstacle : obstacles) {
-            if (player.getX() == obstacle.getX() && player.getY() == obstacle.getY()) {
+            if (player.hasSamePosition(obstacle)) {
                 return false;
             }
         }
@@ -207,28 +214,49 @@ public class MonsterGame {
     }
 
     private static boolean validMonsterPosition(Monster monster) throws IOException {
-        // Check if tried to move outside screen
+        // Check if monster tried to move outside screen
         if (monster.getX() < 0 || monster.getY() < 3 || monster.getX() > terminal.getTerminalSize().getColumns() - 1 || monster.getY() > terminal.getTerminalSize().getRows() - 1) {
             return false;
         }
 
-        // Check if tried to move into an obstacle
-//        for (Obstacle obstacle : obstacles) {
-//            if (player.getX() == obstacle.getX() && player.getY() == obstacle.getY()) {
-//                return false;
-//            }
-//        }
+        // Check if monster tried to move into an obstacle
+        for (Obstacle obstacle : obstacles) {
+            if (monster.hasSamePosition(obstacle)) {
+                return false;
+            }
+        }
 
         return true;
     }
 
     private static boolean hasMonsterCaughtPlayer() {
         for (Monster monster : monsters) {
-            if (player.getX() == monster.getX() && player.getY() == monster.getY()) {
+            if (monster.hasSamePosition(player)) {
                 return true;
             }
         }
         return false;
+    }
+
+    private static boolean hasMonsterSteppedOnBomb() {
+        boolean anyMonsterHasSteppedOnBomb = false;
+        for (Monster monster : monsters) {
+            boolean monsterHasSteppedOnBomb = false;
+            for (GameObject bomb : bombs) {
+                if (monster.getX() == bomb.getX() && monster.getY() == bomb.getY()) { // monster.hasSamePosition(bomb)
+                    bombs.remove(bomb);
+                    monsterHasSteppedOnBomb = true;
+                    break;
+                }
+            }
+            if (monsterHasSteppedOnBomb) {
+                tg.putString(monster.getX(), monster.getY(), " ");
+                monsters.remove(monster);
+                anyMonsterHasSteppedOnBomb = true;
+                break;
+            }
+        }
+        return anyMonsterHasSteppedOnBomb;
     }
 
     private static void drawCharacters() throws IOException {
@@ -242,6 +270,16 @@ public class MonsterGame {
         for (Monster monster : monsters) {
             tg.putString(monster.getPreviousX(), monster.getPreviousY(), " ");
             tg.putString(monster.getX(), monster.getY(), String.valueOf(monster.getSymbol()));
+        }
+
+        terminal.flush();
+    }
+
+    private static void drawGameObjects(List<GameObject> objectList, TextColor color) throws IOException {
+        // Draw game objects
+        tg.setForegroundColor(color);
+        for (GameObject object : objectList) {
+            tg.putString(object.getX(), object.getY(), String.valueOf(object.getSymbol()));
         }
 
         terminal.flush();
