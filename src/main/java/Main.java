@@ -114,8 +114,8 @@ public class Main {
 
             // Print obstacles
             for (TerminalPosition p : obstacles) {
-                //tg.setForegroundColor(TextColor.ANSI.CYAN);
-                //tg.putString(p, String.valueOf(block));
+                tg.setForegroundColor(TextColor.ANSI.CYAN);
+                tg.putString(p, String.valueOf(block));
             }
 
             // Detect if player tries to run into obstacle
