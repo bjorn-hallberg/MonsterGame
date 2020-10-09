@@ -8,7 +8,6 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class MonsterGame {
     static private Terminal terminal;
@@ -140,7 +139,7 @@ public class MonsterGame {
         tg.putString(0, 2, "╚═══════════════════════════════════════════════════════════════╧══════════════╝");
 
         // Create player
-        player = new Player(40, 10, String.valueOf('\u263B'));
+        player = new Player(40, 10);
 
         // Create monsters
         Monster monster1 = new Monster(20, 15);
