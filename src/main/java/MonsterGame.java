@@ -236,7 +236,7 @@ public class MonsterGame {
         tg.setForegroundColor(TextColor.ANSI.CYAN);
         for (Monster monster : monsters){
             tg.putString(monster.getOldX(), monster.getOldX(), " ");
-            tg.putString(monster.getX(), monster.getY(), String.valueOf(monster.getMonsterCharacter()));
+            tg.putString(monster.getX(), monster.getY(), String.valueOf(monster.getSymbol()));
         }
 
         terminal.flush();
