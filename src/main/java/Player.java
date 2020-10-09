@@ -1,16 +1,7 @@
-public class Player {
-    private int x;
-    private int y;
-    private final String symbol;
-    private int previousX; 
-    private int previousY;
+public class Player extends GameCharacter{
 
-    public Player(int x, int y, String symbol) {
-        this.x = x;
-        this.y = y;
-        this.symbol = symbol;
-        this.previousX = x;
-        this.previousY = y;
+    public Player(int x, int y, String s) {
+        super(x,y,"\u263B");
     }
 
     public int getX() {
@@ -36,25 +27,25 @@ public class Player {
     public void moveUp(){
         previousX = x;
         previousY = y;
-        y -= 2;
+        y --;
     }
 
     public void moveDown(){
         previousX = x;
         previousY = y;
-        y += 2;
+        y ++;
     }
 
     public void moveLeft(){
         previousX = x;
         previousY = y;
-        x -= 2;
+        x --;
     }
 
     public void moveRight(){
         previousX = x;
         previousY = y;
-        x += 2;
+        x ++;
     }
 
     public void movePreviousPosition(){
