@@ -46,7 +46,6 @@ public class MonsterGame {
                 iter = (iter + 1) % 100;
                 if (iter == 0) {
                     // Print game object again if monster moved over them
-                    drawGameObjects(bombs, TextColor.ANSI.RED);
                     drawGameObjects(fruits, TextColor.ANSI.YELLOW);
 
                     // Move monsters
@@ -59,6 +58,9 @@ public class MonsterGame {
                         continueReadingInput = false;
                         break;
                     }
+
+                    // Check if monster stepped on a bomb
+                    hasMonsterSteppedOnBomb();
                 }
 
                 Thread.sleep(5);
@@ -231,6 +233,27 @@ public class MonsterGame {
             }
         }
         return false;
+    }
+
+    private static boolean hasMonsterSteppedOnBomb() {
+        boolean anyMonsterHasSteppedOnBomb = false;
+        for (Monster monster : monsters) {
+            boolean monsterHasSteppedOnBomb = false;
+            for (GameObject bomb : bombs) {
+                if (monster.getX() == bomb.getX() && monster.getY() == bomb.getY()) { // monster.hasSamePosition(bomb)
+                    bombs.remove(bomb);
+                    monsterHasSteppedOnBomb = true;
+                    break;
+                }
+            }
+            if (monsterHasSteppedOnBomb) {
+                tg.putString(monster.getX(), monster.getY(), " ");
+                monsters.remove(monster);
+                anyMonsterHasSteppedOnBomb = true;
+                break;
+            }
+        }
+        return anyMonsterHasSteppedOnBomb;
     }
 
     private static void drawCharacters() throws IOException {
