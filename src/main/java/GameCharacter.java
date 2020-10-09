@@ -1,4 +1,5 @@
 public abstract class GameCharacter extends GameObject {
+
     protected int previousX;
     protected int previousY;
 
@@ -26,4 +27,5 @@ public abstract class GameCharacter extends GameObject {
         x = previousX;
         y = previousY;
     }
+
 }

@@ -1,4 +1,5 @@
 public abstract class GameObject {
+
     protected int x;
     protected int y;
     protected String symbol;
@@ -24,4 +25,5 @@ public abstract class GameObject {
     public boolean hasSamePosition(GameObject object) {
         return x == object.x && y == object.y;
     }
+
 }

@@ -8,7 +8,6 @@ import com.googlecode.lanterna.terminal.Terminal;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class MonsterGame {
     static private Terminal terminal;
@@ -75,6 +74,7 @@ public class MonsterGame {
 
             // Check if user wants to quit
             if (keyStroke.getCharacter() == Character.valueOf('q') || keyStroke.getKeyType() == KeyType.Escape) {
+                drawMessage("Game ended");
                 continueReadingInput = false;
                 break;
             }
@@ -140,15 +140,15 @@ public class MonsterGame {
         tg.putString(0, 2, "╚═══════════════════════════════════════════════════════════════╧══════════════╝");
 
         // Create player
-        player = new Player(40, 10, String.valueOf('\u263B'));
+        player = new Player(40, 10);
 
         // Create monsters
-        Monster monster1 = new Monster(20, 15);
-        monsters.add(monster1);
-        Monster monster2 = new Monster(30, 20);
-        monsters.add(monster2);
-        Monster monster3 = new Monster(60, 10);
-        monsters.add(monster3);
+        monsters.add(new Monster(55, 13));
+        monsters.add(new Monster(39, 7));
+        monsters.add(new Monster(5, 8));
+        monsters.add(new Monster(25, 22));
+        monsters.add(new Monster(71, 18));
+
 
 
         // Create and draw obstacles
@@ -183,7 +183,7 @@ public class MonsterGame {
 
         // Create and draw fruits
         fruits.add(new Fruit(54, 12));
-        fruits.add(new Fruit(38, 6));
+        fruits.add(new Fruit(38, 7));
         fruits.add(new Fruit(4, 8));
         fruits.add(new Fruit(24, 22));
         fruits.add(new Fruit(70, 18));
