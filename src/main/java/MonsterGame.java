@@ -143,12 +143,12 @@ public class MonsterGame {
         player = new Player(40, 10, String.valueOf('\u263B'));
 
         // Create monsters
-        Monster monster1 = new Monster(20, 15);
-        monsters.add(monster1);
-        Monster monster2 = new Monster(30, 20);
-        monsters.add(monster2);
-        Monster monster3 = new Monster(60, 10);
-        monsters.add(monster3);
+        monsters.add(new Monster(55, 13));
+        monsters.add(new Monster(39, 7));
+        monsters.add(new Monster(5, 8));
+        monsters.add(new Monster(25, 22));
+        monsters.add(new Monster(71, 18));
+
 
 
         // Create and draw obstacles
