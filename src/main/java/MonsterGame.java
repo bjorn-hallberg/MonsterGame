@@ -88,7 +88,7 @@ public class MonsterGame {
 
             // Check if valid position
             if (!validPlayerPosition(player)) {
-//                player.moveToPreviousPosition();
+                player.moveToPreviousPosition();
             }
 
             drawCharacters();
