@@ -151,12 +151,21 @@ public class MonsterGame {
 
 
         // Create and draw obstacles
-        Obstacle obstacle1 = new Obstacle(60, 14);
-        obstacles.add(obstacle1);
-        obstacles.add(new Obstacle(5, 5));
-        // Add obstacles on a horizontal line at Y height
-        for (int i = 0; i < terminal.getTerminalSize().getColumns(); i++) {
-            obstacles.add(new Obstacle(i, 6));
+//        for (int i = 0; i < terminal.getTerminalSize().getColumns(); i++) {
+//            obstacles.add(new Obstacle(i,3)); // "Roof"
+//            obstacles.add(new Obstacle(i,23)); // "Ceiling"
+//        }
+        for (int i = 0; i < (terminal.getTerminalSize().getColumns()/3); i++) {
+            obstacles.add(new Obstacle(i+26,6));
+            obstacles.add(new Obstacle(i+26,12));
+            obstacles.add(new Obstacle(i+26,18));
+            obstacles.add(new Obstacle(i+26,24));
+        }
+        for (int i = 0; i < (terminal.getTerminalSize().getColumns()/6); i++) {
+            obstacles.add(new Obstacle(i + 5, 9));
+            obstacles.add(new Obstacle(i + 58, 9));
+            obstacles.add(new Obstacle(i + 5, 15));
+            obstacles.add(new Obstacle(i + 58, 15));
         }
         for (Obstacle obstacle : obstacles) {
             tg.setForegroundColor(TextColor.ANSI.MAGENTA);
