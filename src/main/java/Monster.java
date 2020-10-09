@@ -1,66 +1,64 @@
-import com.googlecode.lanterna.TextColor;
-import com.googlecode.lanterna.graphics.TextGraphics;
-
 public class Monster {
-    private int monsterX;
-    private int monsterY;
+    private int x;
+    private int y;
     static final char monsterCharacter= '\u2689';
-    private int oldMonsterX;
-    private int oldMonsterY;
+    private int oldX;
+    private int oldY;
 
-    public Monster(int monsterX, int monsterY, char monsterCharacter) {
-        this.monsterX = monsterX;
-        this.monsterY = monsterY;
-        this.oldMonsterX = monsterX;
-        this.oldMonsterY = monsterY;
+    public Monster(int x, int y) {
+        this.x = x;
+        this.y = y;
+        this.oldX = x;
+        this.oldY = y;
+
+    }
+    public Monster(int x, int monsterY, char monsterCharacter) {
+        this.x = x;
+        this.y = y;
+        this.oldX = x;
+        this.oldY = y;
 
     }
 
-    public int getMonsterX() {
-        return monsterX;
+    public int getX() {
+        return x;
     }
 
-    public int getMonsterY() {
-        return monsterY;
+    public int getY() {
+        return y;
     }
 
     static public char getMonsterCharacter() {
         return monsterCharacter;
     }
 
-    public int getOldMonsterX() {
-        return oldMonsterX;
+    public int getOldX() {
+        return oldX;
     }
 
-    public int getOldMonsterY() {
-        return oldMonsterY;
+    public int getOldY() {
+        return oldY;
     }
 
     public void moveMonster(Player player){
         // The monster moves towards the player based on players move
-
         // Save monster's old position
-        int oldMonsterX = this.monsterX; // save old position x
-        int oldMonsterY = this.monsterY; // save old position y
+        int oldMonsterX = this.x; // save old position x
+        int oldMonsterY = this.y; // save old position y
 
         // Calculate monster's new position
-        if (player.getY() < this.monsterX) {
-                this.monsterX--;
-            } else if (player.getX() > this.monsterX) {
-                this.monsterX++;
+        if (player.getY() < this.x) {
+                this.x--;
+            } else if (player.getX() > this.x) {
+                this.x++;
             }
-            if (player.getX() < this.monsterY) {
-                this.monsterY--;
-            } else if (player.getY() > this.monsterY) {
-                this.monsterY++;
+            if (player.getX() < this.y) {
+                this.y--;
+            } else if (player.getY() > this.y) {
+                this.y++;
             }
-
 
     }
 
-/*    public void drawMonster(TextGraphics tg){
-        tg.setForegroundColor(TextColor.ANSI.CYAN);
-        tg.putString(monsterX, monsterX, String.valueOf(monsterCharacter));
-    }*/
 
 }
