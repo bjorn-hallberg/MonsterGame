@@ -43,19 +43,19 @@ public class Monster {
     public void moveMonster(Player player){
         // The monster moves towards the player based on players move
         // Save monster's old position
-        int oldMonsterX = this.x; // save old position x
-        int oldMonsterY = this.y; // save old position y
+        oldX = x; // save old position x
+        oldY = y; // save old position y
 
         // Calculate monster's new position
-        if (player.getY() < this.x) {
-                this.x--;
-            } else if (player.getX() > this.x) {
-                this.x++;
+        if (player.getX() < x) {
+                x--;
+            } else if (player.getX() > x) {
+                x++;
             }
-            if (player.getX() < this.y) {
-                this.y--;
-            } else if (player.getY() > this.y) {
-                this.y++;
+            if (player.getY() < y) {
+                y--;
+            } else if (player.getY() > y) {
+                y++;
             }
 
     }
