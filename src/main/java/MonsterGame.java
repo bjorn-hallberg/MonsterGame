@@ -209,7 +209,7 @@ public class MonsterGame {
 
     private static boolean hasMonsterCaughtPlayer() {
         for (Monster monster : monsters) {
-            if (player.getX() == monster.getMonsterX() && player.getY() == monster.getMonsterY()) {
+            if (player.getX() == monster.getX() && player.getY() == monster.getY()) {
                 return true;
             }
         }
@@ -217,12 +217,17 @@ public class MonsterGame {
     }
 
     private static void drawCharacters() throws IOException {
+        // Draw player
+        tg.setForegroundColor(TextColor.ANSI.GREEN);
+        tg.putString(player.getPreviousX(), player.getPreviousY(), " ");
+        tg.putString(player.getX(), player.getY(), player.getSymbol());
+
+        // Draw monsters
         tg.setForegroundColor(TextColor.ANSI.CYAN);
         for (Monster monster : monsters){
+            tg.putString(monster.getOldX(), monster.getOldX(), " ");
             tg.putString(monster.getX(), monster.getY(), String.valueOf(monster.getMonsterCharacter()));
         }
-        tg.setForegroundColor(TextColor.ANSI.GREEN);
-        tg.putString(player.getX(), player.getY(), player.getSymbol());
 
         terminal.flush();
     }
@@ -247,7 +252,6 @@ public class MonsterGame {
     }
 
     private static void endGame() throws IOException, InterruptedException {
-        //drawMessage("GAME OVER");
         Thread.sleep(10000);
         terminal.close();
     }
