@@ -109,6 +109,12 @@ public class MonsterGame {
                 continueReadingInput = false;
             }
 
+            // Check if played ran into a monster
+            if (hasMonsterCaughtPlayer()) {
+                drawMessage("GAME OVER");
+                break;
+            }
+
             // Check if player stepped on a bomb
             for (GameObject bomb : bombs) {
                 if (player.getX() == bomb.getX() && player.getY() == bomb.getY()) {
