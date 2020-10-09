@@ -32,21 +32,16 @@ public class MonsterGame {
     }
 
     private static void startGame() throws IOException, InterruptedException {
-        // Create terminal
-        terminal = new DefaultTerminalFactory().createTerminal();
-        terminal.setCursorVisible(false);
-        tg = terminal.newTextGraphics();
-        tg.putString(0, 0, "╔═══════════════════════════════════════════════════════════════╤══════════════╗");
-        tg.putString(0, 1, "║                                 MONSTER GAME                  │  Score:      ║");
-        tg.putString(0, 2, "╚═══════════════════════════════════════════════════════════════╧══════════════╝");
-
+        // Initiate game
         initGame();
 
+        // Run game
         boolean continueReadingInput = true;
         boolean monsterHasCaughtPlayer = false;
         int iter = 0;
         KeyStroke keyStroke = null;
         while (continueReadingInput) {
+            // Loop while no input from user
             do {
                 iter = (iter + 1) % 100;
                 if (iter == 0) {
@@ -66,7 +61,7 @@ public class MonsterGame {
                 keyStroke = terminal.pollInput();
             } while (keyStroke == null);
 
-            // Break out if monster has caught player
+            // End game if monster has caught player
             if (monsterHasCaughtPlayer) {
                 drawMessage("GAME OVER");
                 break;
@@ -86,7 +81,7 @@ public class MonsterGame {
                 case ArrowLeft -> player.moveLeft();
             }
 
-            // Check if valid position
+            // Check if valid player position
             if (!validPlayerPosition(player)) {
 //                player.moveToPreviousPosition();
             }
@@ -124,6 +119,14 @@ public class MonsterGame {
     }
 
     private static void initGame() throws IOException {
+        // Create terminal
+        terminal = new DefaultTerminalFactory().createTerminal();
+        terminal.setCursorVisible(false);
+        tg = terminal.newTextGraphics();
+        tg.putString(0, 0, "╔═══════════════════════════════════════════════════════════════╤══════════════╗");
+        tg.putString(0, 1, "║                                 MONSTER GAME                  │  Score:      ║");
+        tg.putString(0, 2, "╚═══════════════════════════════════════════════════════════════╧══════════════╝");
+
         // Create player
         player = new Player(10, 10, String.valueOf('\u263B'));
 
