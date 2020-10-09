@@ -1,4 +1,3 @@
-import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
@@ -45,7 +44,7 @@ public class MonsterGame {
             do {
                 iter = (iter + 1) % 100;
                 if (iter == 0) {
-                    // Print game object again if monster moved over them
+                    // Print fruits again if monster moved over them
                     drawGameObjects(fruits, TextColor.ANSI.YELLOW);
 
                     // Move monsters
@@ -88,7 +87,7 @@ public class MonsterGame {
             }
 
             // Check if valid player position
-            if (!validPlayerPosition(player)) {
+            if (invalidCharacterPosition(player)) {
                 player.moveToPreviousPosition();
             }
 
@@ -144,23 +143,18 @@ public class MonsterGame {
         Monster monster3 = new Monster(60, 10);
         monsters.add(monster3);
 
-
         // Create and draw obstacles
         Obstacle obstacle1 = new Obstacle(60, 14);
         obstacles.add(obstacle1);
         obstacles.add(new Obstacle(5, 5));
         // Add obstacles on a horizontal line at Y height
         for (int i = 0; i < terminal.getTerminalSize().getColumns(); i++) {
-            obstacles.add(new Obstacle(i,6));
+            obstacles.add(new Obstacle(i, 6));
         }
         for (Obstacle obstacle : obstacles) {
             tg.setForegroundColor(TextColor.ANSI.MAGENTA);
             tg.putString(obstacle.getX(), obstacle.getY(), obstacle.getSymbol());
         }
-
-
-
-
 
 
         // Create and draw bombs
@@ -187,42 +181,29 @@ public class MonsterGame {
         for (Monster monster : monsters) {
             monster.moveMonster(player);
             // Check if valid position
-            if (!validMonsterPosition(monster)) {
+            if (invalidCharacterPosition(monster)) {
                 monster.moveToPreviousPosition();
             }
         }
     }
 
-    private static boolean validPlayerPosition(Player player) throws IOException {
+    private static boolean invalidCharacterPosition(GameCharacter character) throws IOException {
         // Check if player tried to move outside screen
-        if (player.getX() < 0 || player.getY() < 3 || player.getX() > terminal.getTerminalSize().getColumns() - 1 || player.getY() > terminal.getTerminalSize().getRows() - 1) {
-            return false;
+        if (character.getX() < 0 ||
+                character.getY() < 3 ||
+                character.getX() > terminal.getTerminalSize().getColumns() - 1 ||
+                character.getY() > terminal.getTerminalSize().getRows() - 1) {
+            return true;
         }
 
         // Check if player tried to move into an obstacle
         for (Obstacle obstacle : obstacles) {
-            if (player.hasSamePosition(obstacle)) {
-                return false;
+            if (character.hasSamePosition(obstacle)) {
+                return true;
             }
         }
 
-        return true;
-    }
-
-    private static boolean validMonsterPosition(Monster monster) throws IOException {
-        // Check if monster tried to move outside screen
-        if (monster.getX() < 0 || monster.getY() < 3 || monster.getX() > terminal.getTerminalSize().getColumns() - 1 || monster.getY() > terminal.getTerminalSize().getRows() - 1) {
-            return false;
-        }
-
-        // Check if monster tried to move into an obstacle
-        for (Obstacle obstacle : obstacles) {
-            if (monster.hasSamePosition(obstacle)) {
-                return false;
-            }
-        }
-
-        return true;
+        return false;
     }
 
     private static boolean hasMonsterCaughtPlayer() {
@@ -239,7 +220,7 @@ public class MonsterGame {
         for (Monster monster : monsters) {
             boolean monsterHasSteppedOnBomb = false;
             for (GameObject bomb : bombs) {
-                if (monster.getX() == bomb.getX() && monster.getY() == bomb.getY()) { // monster.hasSamePosition(bomb)
+                if (monster.hasSamePosition(bomb)) {
                     bombs.remove(bomb);
                     monsterHasSteppedOnBomb = true;
                     break;
