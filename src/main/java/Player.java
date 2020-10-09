@@ -4,26 +4,6 @@ public class Player extends GameCharacter{
         super(x,y,"\u263B");
     }
 
-    public int getX() {
-        return x;
-    }
-
-    public int getY() {
-        return y;
-    }
-
-    public String getSymbol() {
-        return symbol;
-    }
-
-    public int getPreviousX() {
-        return previousX;
-    }
-
-    public int getPreviousY() {
-        return previousY;
-    }
-
     public void moveUp(){
         previousX = x;
         previousY = y;
