@@ -53,7 +53,7 @@ public class MonsterGame {
                     // Move monsters
                     moveMonsters();
                     drawCharacters();
-                    
+
                     // Check if any monster has caught player
                     if (hasMonsterCaughtPlayer()) {
                         monsterHasCaughtPlayer = true;
@@ -71,7 +71,7 @@ public class MonsterGame {
                 drawMessage("GAME OVER");
                 break;
             }
-            
+
             // Check if user wants to quit
             if (keyStroke.getCharacter() == Character.valueOf('q') || keyStroke.getKeyType() == KeyType.Escape) {
                 continueReadingInput = false;
@@ -177,11 +177,13 @@ public class MonsterGame {
         terminal.flush();
     }
 
-    private static void moveMonsters() {
+    private static void moveMonsters() throws IOException {
         for (Monster monster : monsters) {
             monster.moveMonster(player);
             // Check if valid position
-            // monster.moveToPreviousPosition();
+            if (!validMonsterPosition(monster)) {
+                monster.moveToPreviousPosition();
+            }
         }
     }
 
@@ -203,9 +205,9 @@ public class MonsterGame {
 
     private static boolean validMonsterPosition(Monster monster) throws IOException {
         // Check if tried to move outside screen
-//        if (monster.getX() < 0 || monster.getY() < 3 || monster.getX() > terminal.getTerminalSize().getColumns() - 1 || monster.getY() > terminal.getTerminalSize().getRows() - 1) {
-//            return false;
-//        }
+        if (monster.getX() < 0 || monster.getY() < 3 || monster.getX() > terminal.getTerminalSize().getColumns() - 1 || monster.getY() > terminal.getTerminalSize().getRows() - 1) {
+            return false;
+        }
 
         // Check if tried to move into an obstacle
 //        for (Obstacle obstacle : obstacles) {
@@ -234,7 +236,7 @@ public class MonsterGame {
 
         // Draw monsters
         tg.setForegroundColor(TextColor.ANSI.CYAN);
-        for (Monster monster : monsters){
+        for (Monster monster : monsters) {
             tg.putString(monster.getPreviousX(), monster.getPreviousY(), " ");
             tg.putString(monster.getX(), monster.getY(), String.valueOf(monster.getSymbol()));
         }
