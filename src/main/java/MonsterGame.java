@@ -17,8 +17,8 @@ public class MonsterGame {
     static private Player player;
     static private List<Monster> monsters = new ArrayList<>();
     //    static private List<Obstacle> obstacles = new ArrayList<>();
-    static private List<Bomb> bombs = new ArrayList<>();
-    static private List<Fruit> fruits = new ArrayList<>();
+    static private List<GameObject> bombs = new ArrayList<>();
+    static private List<GameObject> fruits = new ArrayList<>();
 
     static int score = 0;
 
@@ -45,6 +45,10 @@ public class MonsterGame {
             do {
                 iter = (iter + 1) % 100;
                 if (iter == 0) {
+                    // Print game object again if monster moved over them
+                    drawGameObjects(bombs, TextColor.ANSI.RED);
+                    drawGameObjects(fruits, TextColor.ANSI.YELLOW);
+
                     // Move monsters
                     moveMonsters();
                     drawCharacters();
@@ -89,7 +93,7 @@ public class MonsterGame {
             drawCharacters();
 
             // Check if player picked a fruit
-            for (Fruit fruit : fruits) {
+            for (GameObject fruit : fruits) {
                 if (player.getX() == fruit.getX() && player.getY() == fruit.getY()) {
                     score++;
                     drawScore();
@@ -105,7 +109,7 @@ public class MonsterGame {
             }
 
             // Check if player stepped on a bomb
-            for (Bomb bomb : bombs) {
+            for (GameObject bomb : bombs) {
                 if (player.getX() == bomb.getX() && player.getY() == bomb.getY()) {
                     tg.setForegroundColor(TextColor.ANSI.RED);
                     tg.putString(player.getX(), player.getY(), player.getSymbol());
@@ -128,7 +132,7 @@ public class MonsterGame {
         tg.putString(0, 2, "╚═══════════════════════════════════════════════════════════════╧══════════════╝");
 
         // Create player
-        player = new Player(10, 10, String.valueOf('\u263B'));
+        player = new Player(40, 10, String.valueOf('\u263B'));
 
         printPlayer();
 
@@ -153,18 +157,16 @@ public class MonsterGame {
 
         // Create and draw bombs
         bombs.add(new Bomb(62, 16));
-        tg.setForegroundColor(TextColor.ANSI.RED);
-        for (Bomb bomb : bombs) {
-            tg.putString(bomb.getX(), bomb.getY(), bomb.getSymbol());
-        }
+        bombs.add(new Bomb(22, 8));
+        drawGameObjects(bombs, TextColor.ANSI.RED);
 
         // Create and draw fruits
         fruits.add(new Fruit(54, 12));
-        fruits.add(new Fruit(38, 18));
-        tg.setForegroundColor(TextColor.ANSI.YELLOW);
-        for (Fruit fruit : fruits) {
-            tg.putString(fruit.getX(), fruit.getY(), fruit.getSymbol());
-        }
+        fruits.add(new Fruit(38, 6));
+        fruits.add(new Fruit(4, 8));
+        fruits.add(new Fruit(24, 22));
+        fruits.add(new Fruit(70, 18));
+        drawGameObjects(fruits, TextColor.ANSI.YELLOW);
 
         // Draw player and monsters
         drawCharacters();
@@ -198,7 +200,7 @@ public class MonsterGame {
 
         // Check if tried to move into an obstacle
 //        for (Obstacle obstacle : obstacles) {
-//            if (player.getX() == obstacle.getX() && player.getY() == obstacle.getY()) {
+//            if (player.getX() == obstacle.getX() && player.getY() == obstacle.getY()) { // player.hasSamePosition(obstacle)
 //                return false;
 //            }
 //        }
@@ -214,7 +216,7 @@ public class MonsterGame {
 
         // Check if tried to move into an obstacle
 //        for (Obstacle obstacle : obstacles) {
-//            if (player.getX() == obstacle.getX() && player.getY() == obstacle.getY()) {
+//            if (player.getX() == obstacle.getX() && player.getY() == obstacle.getY()) { // monster.hasSamePosition(obstacle)
 //                return false;
 //            }
 //        }
@@ -224,7 +226,7 @@ public class MonsterGame {
 
     private static boolean hasMonsterCaughtPlayer() {
         for (Monster monster : monsters) {
-            if (player.getX() == monster.getX() && player.getY() == monster.getY()) {
+            if (player.getX() == monster.getX() && player.getY() == monster.getY()) { // monster.hasSamePosition(player)
                 return true;
             }
         }
@@ -242,6 +244,16 @@ public class MonsterGame {
         for (Monster monster : monsters) {
             tg.putString(monster.getPreviousX(), monster.getPreviousY(), " ");
             tg.putString(monster.getX(), monster.getY(), String.valueOf(monster.getSymbol()));
+        }
+
+        terminal.flush();
+    }
+
+    private static void drawGameObjects(List<GameObject> objectList, TextColor color) throws IOException {
+        // Draw game objects
+        tg.setForegroundColor(color);
+        for (GameObject object : objectList) {
+            tg.putString(object.getX(), object.getY(), String.valueOf(object.getSymbol()));
         }
 
         terminal.flush();
