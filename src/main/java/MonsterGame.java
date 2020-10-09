@@ -143,11 +143,11 @@ public class MonsterGame {
         player = new Player(40, 10);
 
         // Create monsters
-        monsters.add(new Monster(55, 13));
-        monsters.add(new Monster(39, 7));
-        monsters.add(new Monster(5, 8));
-        monsters.add(new Monster(25, 22));
-        monsters.add(new Monster(71, 18));
+        monsters.add(new Monster(3, 3));
+        monsters.add(new Monster(78, 3));
+        monsters.add(new Monster(30, 10));
+        monsters.add(new Monster(3, 23));
+        monsters.add(new Monster(78, 23));
 
 
 
@@ -177,7 +177,7 @@ public class MonsterGame {
 
 
         // Create and draw bombs
-        bombs.add(new Bomb(62, 16));
+        bombs.add(new Bomb(54, 16));
         bombs.add(new Bomb(22, 8));
         drawGameObjects(bombs, TextColor.ANSI.RED);
 
