@@ -196,7 +196,7 @@ public class MonsterGame {
     }
 
     private static boolean invalidCharacterPosition(GameCharacter character) throws IOException {
-        // Check if player tried to move outside screen
+        // Check if tried to move outside screen
         if (character.getX() < 0 ||
                 character.getY() < 3 ||
                 character.getX() > terminal.getTerminalSize().getColumns() - 1 ||
@@ -204,7 +204,7 @@ public class MonsterGame {
             return true;
         }
 
-        // Check if player tried to move into an obstacle
+        // Check if tried to move into an obstacle
         for (GameObject obstacle : obstacles) {
             if (character.hasSamePosition(obstacle)) {
                 return true;
