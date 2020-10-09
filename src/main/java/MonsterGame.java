@@ -1,3 +1,4 @@
+import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -55,6 +56,15 @@ public class MonsterGame {
         monsters.add(monster2);
 
         // Create and draw obstacles
+        List<TerminalPosition> obstacles = new ArrayList<>();
+        Obstacle obstacle1 = new Obstacle(10, 10, 10);
+        final char block = '\u2588';
+
+        // Print obstacles
+        for (TerminalPosition p : obstacles) {
+            tg.setForegroundColor(TextColor.ANSI.CYAN);
+            tg.putString(p, String.valueOf(block));
+        }
 
         // Create and draw bombs
         bombs.add(new Bomb(62, 16));
