@@ -203,40 +203,40 @@ public class MonsterGame {
     }
 
     private static boolean validPlayerPosition(Player player) throws IOException {
-        // Check if tried to move outside screen
+        // Check if player tried to move outside screen
         if (player.getX() < 0 || player.getY() < 3 || player.getX() > terminal.getTerminalSize().getColumns() - 1 || player.getY() > terminal.getTerminalSize().getRows() - 1) {
             return false;
         }
 
-        // Check if tried to move into an obstacle
-//        for (Obstacle obstacle : obstacles) {
-//            if (player.getX() == obstacle.getX() && player.getY() == obstacle.getY()) { // player.hasSamePosition(obstacle)
-//                return false;
-//            }
-//        }
+        // Check if player tried to move into an obstacle
+        for (Obstacle obstacle : obstacles) {
+            if (player.hasSamePosition(obstacle)) {
+                return false;
+            }
+        }
 
         return true;
     }
 
     private static boolean validMonsterPosition(Monster monster) throws IOException {
-        // Check if tried to move outside screen
+        // Check if monster tried to move outside screen
         if (monster.getX() < 0 || monster.getY() < 3 || monster.getX() > terminal.getTerminalSize().getColumns() - 1 || monster.getY() > terminal.getTerminalSize().getRows() - 1) {
             return false;
         }
 
-        // Check if tried to move into an obstacle
-//        for (Obstacle obstacle : obstacles) {
-//            if (player.getX() == obstacle.getX() && player.getY() == obstacle.getY()) { // monster.hasSamePosition(obstacle)
-//                return false;
-//            }
-//        }
+        // Check if monster tried to move into an obstacle
+        for (Obstacle obstacle : obstacles) {
+            if (monster.hasSamePosition(obstacle)) {
+                return false;
+            }
+        }
 
         return true;
     }
 
     private static boolean hasMonsterCaughtPlayer() {
         for (Monster monster : monsters) {
-            if (player.getX() == monster.getX() && player.getY() == monster.getY()) { // monster.hasSamePosition(player)
+            if (monster.hasSamePosition(player)) {
                 return true;
             }
         }
