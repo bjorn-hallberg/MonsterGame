@@ -10,8 +10,6 @@ import java.util.List;
 public class Obstacle {
 
     List<TerminalPosition> obstacles = new ArrayList<>();
-    DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
-    Terminal terminal = terminalFactory.createTerminal();
 
     private int length;
     private int column;
