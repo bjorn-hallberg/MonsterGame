@@ -142,12 +142,12 @@ public class MonsterGame {
         player = new Player(40, 10);
 
         // Create monsters
-        Monster monster1 = new Monster(20, 15);
-        monsters.add(monster1);
-        Monster monster2 = new Monster(30, 20);
-        monsters.add(monster2);
-        Monster monster3 = new Monster(60, 10);
-        monsters.add(monster3);
+        monsters.add(new Monster(55, 13));
+        monsters.add(new Monster(39, 7));
+        monsters.add(new Monster(5, 8));
+        monsters.add(new Monster(25, 22));
+        monsters.add(new Monster(71, 18));
+
 
 
         // Create and draw obstacles
@@ -180,7 +180,7 @@ public class MonsterGame {
 
         // Create and draw fruits
         fruits.add(new Fruit(54, 12));
-        fruits.add(new Fruit(38, 6));
+        fruits.add(new Fruit(38, 7));
         fruits.add(new Fruit(4, 8));
         fruits.add(new Fruit(24, 22));
         fruits.add(new Fruit(70, 18));
