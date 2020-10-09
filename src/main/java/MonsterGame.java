@@ -16,7 +16,7 @@ public class MonsterGame {
 
     static private Player player;
     static private List<Monster> monsters = new ArrayList<>();
-    //    static private List<Obstacle> obstacles = new ArrayList<>();
+    static private List<Obstacle> obstacles = new ArrayList<>();
     static private List<Bomb> bombs = new ArrayList<>();
     static private List<Fruit> fruits = new ArrayList<>();
 
@@ -137,16 +137,24 @@ public class MonsterGame {
         Monster monster3 = new Monster(60, 10);
         monsters.add(monster3);
 
-        // Create and draw obstacles
-        List<TerminalPosition> obstacles = new ArrayList<>();
-        Obstacle obstacle1 = new Obstacle(10, 10, 10);
-        final char block = '\u2588';
 
-        // Print obstacles
-        for (TerminalPosition p : obstacles) {
-            tg.setForegroundColor(TextColor.ANSI.CYAN);
-            tg.putString(p, String.valueOf(block));
+        // Create and draw obstacles
+        Obstacle obstacle1 = new Obstacle(60, 14);
+        obstacles.add(obstacle1);
+        obstacles.add(new Obstacle(5, 5));
+        // Add obstacles on a horizontal line at Y height
+        for (int i = 0; i < terminal.getTerminalSize().getColumns(); i++) {
+            obstacles.add(new Obstacle(i,6));
         }
+        for (Obstacle obstacle : obstacles) {
+            tg.setForegroundColor(TextColor.ANSI.MAGENTA);
+            tg.putString(obstacle.getX(), obstacle.getY(), obstacle.getSymbol());
+        }
+
+
+
+
+
 
         // Create and draw bombs
         bombs.add(new Bomb(62, 16));
@@ -194,11 +202,11 @@ public class MonsterGame {
         }
 
         // Check if tried to move into an obstacle
-//        for (Obstacle obstacle : obstacles) {
-//            if (player.getX() == obstacle.getX() && player.getY() == obstacle.getY()) {
-//                return false;
-//            }
-//        }
+        for (Obstacle obstacle : obstacles) {
+            if (player.getX() == obstacle.getX() && player.getY() == obstacle.getY()) {
+                return false;
+            }
+        }
 
         return true;
     }
