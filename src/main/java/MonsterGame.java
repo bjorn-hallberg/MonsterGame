@@ -136,8 +136,6 @@ public class MonsterGame {
         // Create player
         player = new Player(40, 10, String.valueOf('\u263B'));
 
-        printPlayer();
-
         // Create monsters
         Monster monster1 = new Monster(20, 15);
         monsters.add(monster1);
@@ -183,13 +181,6 @@ public class MonsterGame {
 
         // Draw score
         drawScore();
-    }
-
-    private static void printPlayer() throws IOException {
-        tg.setForegroundColor(TextColor.ANSI.GREEN);
-        tg.putString(player.getX(), player.getY(), player.getSymbol());
-
-        terminal.flush();
     }
 
     private static void moveMonsters() throws IOException {
