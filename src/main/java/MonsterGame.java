@@ -181,7 +181,7 @@ public class MonsterGame {
 
         // Create and draw fruits
         fruits.add(new Fruit(54, 12));
-        fruits.add(new Fruit(38, 6));
+        fruits.add(new Fruit(38, 7));
         fruits.add(new Fruit(4, 8));
         fruits.add(new Fruit(24, 22));
         fruits.add(new Fruit(70, 18));
