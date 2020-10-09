@@ -10,16 +10,18 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MonsterGame {
+
     static private Terminal terminal;
     static private TextGraphics tg;
 
     static private Player player;
     static private List<Monster> monsters = new ArrayList<>();
-    static private List<Obstacle> obstacles = new ArrayList<>();
+    static private List<GameObject> obstacles = new ArrayList<>();
     static private List<GameObject> bombs = new ArrayList<>();
     static private List<GameObject> fruits = new ArrayList<>();
 
     static int score = 0;
+
 
     public static void main(String[] args) {
         try {
@@ -149,32 +151,18 @@ public class MonsterGame {
         monsters.add(new Monster(3, 23));
         monsters.add(new Monster(78, 23));
 
-
-
         // Create and draw obstacles
-//        for (int i = 0; i < terminal.getTerminalSize().getColumns(); i++) {
-//            obstacles.add(new Obstacle(i,3)); // "Roof"
-//            obstacles.add(new Obstacle(i,23)); // "Ceiling"
-//        }
-        for (int i = 0; i < (terminal.getTerminalSize().getColumns()/3); i++) {
-            obstacles.add(new Obstacle(i+26,6));
-
-            obstacles.add(new Obstacle(i+26,18));
+        for (int i = 0; i < (terminal.getTerminalSize().getColumns() / 3); i++) {
+            obstacles.add(new Obstacle(i + 26, 6));
+            obstacles.add(new Obstacle(i + 26, 18));
         }
-
-
-        for (int i = 0; i < (terminal.getTerminalSize().getColumns()/6); i++) {
+        for (int i = 0; i < (terminal.getTerminalSize().getColumns() / 6); i++) {
             obstacles.add(new Obstacle(i + 5, 9));
             obstacles.add(new Obstacle(i + 58, 9));
             obstacles.add(new Obstacle(i + 5, 15));
             obstacles.add(new Obstacle(i + 58, 15));
         }
-  
-        for (Obstacle obstacle : obstacles) {
-            tg.setForegroundColor(TextColor.ANSI.MAGENTA);
-            tg.putString(obstacle.getX(), obstacle.getY(), obstacle.getSymbol());
-        }
-
+        drawGameObjects(obstacles, TextColor.ANSI.MAGENTA);
 
         // Create and draw bombs
         bombs.add(new Bomb(54, 16));
@@ -216,7 +204,7 @@ public class MonsterGame {
         }
 
         // Check if player tried to move into an obstacle
-        for (Obstacle obstacle : obstacles) {
+        for (GameObject obstacle : obstacles) {
             if (character.hasSamePosition(obstacle)) {
                 return true;
             }
