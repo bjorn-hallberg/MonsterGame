@@ -42,8 +42,9 @@ public class MonsterGame {
         initGame();
 
         boolean continueReadingInput = true;
+        boolean monsterHasCaughtPlayer = false;
         int iter = 0;
-        KeyStroke keyStroke;
+        KeyStroke keyStroke = null;
         while (continueReadingInput) {
             do {
                 iter = (iter + 1) % 100;
@@ -51,12 +52,25 @@ public class MonsterGame {
                     // Move monsters
                     moveMonsters();
                     drawCharacters();
+                    
+                    // Check if any monster has caught player
+                    if (hasMonsterCaughtPlayer()) {
+                        monsterHasCaughtPlayer = true;
+                        continueReadingInput = false;
+                        break;
+                    }
                 }
 
                 Thread.sleep(5);
                 keyStroke = terminal.pollInput();
             } while (keyStroke == null);
 
+            // Break out if monster has caught player
+            if (monsterHasCaughtPlayer) {
+                drawMessage("GAME OVER");
+                break;
+            }
+            
             // Check if user wants to quit
             if (keyStroke.getCharacter() == Character.valueOf('q') || keyStroke.getKeyType() == KeyType.Escape) {
                 continueReadingInput = false;
@@ -189,6 +203,15 @@ public class MonsterGame {
 //        }
 
         return true;
+    }
+
+    private static boolean hasMonsterCaughtPlayer() {
+        for (Monster monster : monsters) {
+            if (player.getX() == monster.getMonsterX() && player.getY() == monster.getMonsterY()) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private static void drawCharacters() throws IOException {
