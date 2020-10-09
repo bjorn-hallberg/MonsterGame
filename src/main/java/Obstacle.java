@@ -1,11 +1,7 @@
-
-public class Obstacle extends GameObject{
+public class Obstacle extends GameObject {
 
     public Obstacle(int x, int y) {
         super(x, y, "⬛");
     }
-
-
-
 
 }
